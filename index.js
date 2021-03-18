@@ -57,7 +57,7 @@ define(["@jupyter-widgets/base"], function(__WEBPACK_EXTERNAL_MODULE_3__) { retu
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "https://unpkg.com/tensorflow_model_analysis@0.29.0/dist/";
+/******/ 	__webpack_require__.p = "https://unpkg.com/tensorflow_model_analysis@0.28.0/dist/";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(__webpack_require__.s = 1);
