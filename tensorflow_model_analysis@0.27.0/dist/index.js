@@ -57,7 +57,7 @@ define(["@jupyter-widgets/base"], function(__WEBPACK_EXTERNAL_MODULE_3__) { retu
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "https://unpkg.com/tensorflow_model_analysis@0.28.0/dist/";
+/******/ 	__webpack_require__.p = "https://unpkg.com/tensorflow_model_analysis@0.30.0/dist/";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(__webpack_require__.s = 1);
@@ -67,7 +67,7 @@ define(["@jupyter-widgets/base"], function(__WEBPACK_EXTERNAL_MODULE_3__) { retu
 /* 0 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"tensorflow_model_analysis","version":"0.29.0","homepage":"https://github.com/tensorflow/model-analysis","bugs":"https://github.com/tensorflow/model-analysis/issues","license":"Apache-2.0","repository":{"type":"git","url":"https://github.com/tensorflow/model-analysis.git"},"main":"lib/index.js","files":["lib/**/*.js","dist/*.js","README.md","LICENSE"],"scripts":{"clean":"rimraf dist/","prepare":"webpack && ./collect-files-before-publish.sh","test":"echo \"Error: no test specified\" && exit 1"},"devDependencies":{"webpack":"^3.5.5","rimraf":"^2.6.1"},"dependencies":{"@jupyter-widgets/base":"^1.1 || ^2 || ^3 || ^4","lodash":"^4.17.4"},"jupyterlab":{"extension":"lib/labplugin","sharedPackages":{"@jupyter-widgets/base":{"bundled":false,"singleton":true}}},"publishConfig":{"registry":"https://wombat-dressing-room.appspot.com"}}
+module.exports = {"name":"tensorflow_model_analysis","version":"0.30.0","homepage":"https://github.com/tensorflow/model-analysis","bugs":"https://github.com/tensorflow/model-analysis/issues","license":"Apache-2.0","repository":{"type":"git","url":"https://github.com/tensorflow/model-analysis.git"},"main":"lib/index.js","files":["lib/**/*.js","dist/*.js","README.md","LICENSE"],"scripts":{"clean":"rimraf dist/","prepare":"webpack && ./collect-files-before-publish.sh","test":"echo \"Error: no test specified\" && exit 1"},"devDependencies":{"rimraf":"^2.6.1","webpack":"^3.12.0","webpack-cli":"^4.6.0"},"dependencies":{"@jupyter-widgets/base":"^1.1 || ^2 || ^3 || ^4","lodash":"^4.17.4"},"jupyterlab":{"extension":"lib/labplugin","sharedPackages":{"@jupyter-widgets/base":{"bundled":false,"singleton":true}}},"publishConfig":{"registry":"https://wombat-dressing-room.appspot.com"}}
 
 /***/ }),
 /* 1 */
@@ -127,13 +127,21 @@ const version = __webpack_require__(0).version;
  * Helper method to load the vulcanized templates.
  */
 function loadVulcanizedTemplate() {
-  const isWebpackPublicPathDefined =
-      typeof __webpack_require__.p !== 'undefined';
-  const templatePath = isWebpackPublicPathDefined ?
-      __webpack_require__.p :
-      // Jupyter hosted path.
-      ((document.querySelector('body').getAttribute('data-base-url') || '/') +
-       'nbextensions/tensorflow_model_analysis/');
+  let templatePath;
+  const dataBaseUrl =
+      document.querySelector('body').getAttribute('data-base-url');
+  // Jupyter Classic
+  if (dataBaseUrl) {
+    templatePath = dataBaseUrl + 'nbextensions/tensorflow_model_analysis/';
+  }
+  // Jupyter Lab
+  else if (this['isJupyterLab']) {
+    templatePath = '/nbextensions/tensorflow_model_analysis/';
+  }
+  // Kubeflow
+  else {
+    templatePath = __webpack_require__.p;
+  }
   // templatePath ends with a slash.
   const templateLocation = `${templatePath}vulcanized_tfma.js`;
 
